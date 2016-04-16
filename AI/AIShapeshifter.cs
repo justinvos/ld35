@@ -2,26 +2,21 @@ using UnityEngine;
 
 public enum Alertness {LOAF, AWARE, INTIMIDATED, CHASE};
 
-public class AIShapeshifter
-{
+public class AIShapeshifter : AICreature {
   public static float MAX_AWARE_TRIGGER = 30;
   public static float MAX_INTIMIDATED_TRIGGER = 10;
   public static float MAX_CHASE_TRIGGER = 4;
 
-  public static float LOAFING_RADIUS = 20;
-
   private EntityPlayer player;
   private EntityShapeshifter shapeshifter;
 
-  private AIHerd herd;
   private Alertness alertness;
 
   private Vector3 loafPoint;
   private Vector3 currentTarget;
   private float remainingRestTime;
 
-  public AIShapeshifter(EntityShapeshifter shapeshifter, EntityPlayer player)
-  {
+  public AIShapeshifter(EntityShapeshifter shapeshifter, EntityPlayer player) : base(shapeshifter, player) {
     this.shapeshifter = shapeshifter;
     this.player = player;
 
@@ -31,8 +26,7 @@ public class AIShapeshifter
     currentTarget = shapeshifter.transform.position;
   }
 
-  public void OnUpdate()
-  {
+  public override void OnUpdate() {
     double distance = Vector3.Distance(shapeshifter.transform.position, player.transform.position);
 
     if(distance < MAX_CHASE_TRIGGER) {
@@ -61,7 +55,7 @@ public class AIShapeshifter
     }
   }
 
-  public void OnLoafUpdate() {
+  public override void OnLoafUpdate() {
 
     if(remainingRestTime > 0) {
       remainingRestTime = remainingRestTime - Time.deltaTime;
@@ -89,18 +83,15 @@ public class AIShapeshifter
     }
   }
 
-  public void OnAwareUpdate()
-  {
+  public void OnAwareUpdate() {
     shapeshifter.speed = new Vector3(0, 0, 0);
   }
 
-  public void OnIntimidatedUpdate()
-  {
+  public void OnIntimidatedUpdate() {
     shapeshifter.speed = new Vector3(0, 0, 0);
   }
 
-  public void OnChaseUpdate()
-  {
+  public void OnChaseUpdate() {
     shapeshifter.speed = new Vector3(0, 0, 0);
   }
 
