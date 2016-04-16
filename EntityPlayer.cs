@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EntityPlayer : MonoBehaviour {
-  
+public class EntityPlayer : Entity {
+
 
 }
