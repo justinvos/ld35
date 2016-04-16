@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Main : MonoBehaviour {
 
+	public GameObject gabbit;
+
 	public static Random RANDOM = new Random();
 
 	public InputHandler inputHandler;

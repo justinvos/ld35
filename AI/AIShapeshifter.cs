@@ -40,6 +40,8 @@ public class AIShapeshifter
       alertness = Alertness.INTIMIDATED;
     } else if(distance < MAX_AWARE_TRIGGER) {
       alertness = Alertness.AWARE;
+    } else {
+      alertness = Alertness.LOAF;
     }
 
     switch(alertness) {
@@ -59,7 +61,7 @@ public class AIShapeshifter
   }
 
   public void OnLoafUpdate() {
-    
+
     if(remainingRestTime > 0) {
       remainingRestTime = remainingRestTime - Time.deltaTime;
 
@@ -76,6 +78,9 @@ public class AIShapeshifter
     else if(Vector3.Distance(currentTarget, shapeshifter.transform.position) < 1) {
       remainingRestTime = UnityEngine.Random.Range(2.0F, 5.0F);
       shapeshifter.speed = new Vector3(0,0,0);
+    }
+    else {
+      shapeshifter.speed = new Vector3(0,0,1); // Eventually move to OnLoafStart() event handler
     }
   }
 

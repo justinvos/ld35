@@ -7,7 +7,8 @@ public class EntityCreature : Entity {
   public override void Start() {
     base.Start();
 
-    GameObject mesh = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+    //GameObject mesh = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+    GameObject mesh = Instantiate(GameObject.Find("Main").GetComponent<Main>().gabbit);
 
     mesh.transform.parent = transform;
     mesh.transform.localPosition = Vector3.zero;
