@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class EntityShapeshifter : Entity {
   public AIShapeshifter ai;
+  public GameObject mesh;
 
   public override void Start() {
     base.Start();
 
-    GameObject mesh = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    mesh = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
     mesh.transform.parent = transform;
     mesh.transform.localPosition = Vector3.zero;

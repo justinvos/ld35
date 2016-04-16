@@ -104,4 +104,7 @@ public class AIShapeshifter
 
   }
 
+  public bool IsSeen() {
+    return shapeshifter.mesh.GetComponent<Renderer>().isVisible;
+  }
 }
