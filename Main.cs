@@ -18,9 +18,14 @@ public class Main : MonoBehaviour {
 		Camera.main.transform.parent = entityPlayer.transform;
 
 
-		GameObject go = new GameObject("Shapeshifter");
-		go.transform.position = new Vector3(10, 1, 10);
-		go.AddComponent<EntityShapeshifter>();
+		GameObject shapeshifter = new GameObject("Shapeshifter");
+		shapeshifter.transform.position = new Vector3(40, 1, 40);
+		shapeshifter.AddComponent<EntityShapeshifter>();
+
+		GameObject testCreature = new GameObject("testCreature");
+		testCreature.transform.position = new Vector3(10, 1, 10);
+		testCreature.AddComponent<EntityCreature>();
+
 	}
 
 	// Update is called once per frame

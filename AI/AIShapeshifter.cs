@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public enum Alertness {LOAF, AWARE, INTIMIDATED, CHASE};
@@ -18,7 +17,7 @@ public class AIShapeshifter
 
   private Vector3 loafPoint;
   private Vector3 currentTarget;
-  private float elaspedStopTime;
+  private float remainingRestTime;
 
   public AIShapeshifter(EntityShapeshifter shapeshifter, EntityPlayer player)
   {
@@ -59,49 +58,40 @@ public class AIShapeshifter
     }
   }
 
-  public void OnLoafUpdate()
-  {
-    double distanceFromLoafPoint = Vector3.Distance(loafPoint, shapeshifter.transform.position);
+  public void OnLoafUpdate() {
+    
+    if(remainingRestTime > 0) {
+      remainingRestTime = remainingRestTime - Time.deltaTime;
 
+      if(remainingRestTime <= 0) {
+        remainingRestTime = 0;
 
-    if(elaspedStopTime > 0)
-    {
-      elaspedStopTime = elaspedStopTime - Time.deltaTime;
-
-      elaspedStopTime = Math.Max(0, elaspedStopTime);
-
-      if(elaspedStopTime == 0)
-      {
-        currentTarget = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS, 1, UnityEngine.Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS) + shapeshifter.transform.position;
+        currentTarget = new Vector3(Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS, 1, Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS) + loafPoint;
 
         shapeshifter.transform.LookAt(currentTarget);
 
         shapeshifter.speed = new Vector3(0,0,1);
       }
     }
-    else if(distanceFromLoafPoint > 20)
-    {
-      shapeshifter.transform.LookAt(loafPoint);
-      shapeshifter.speed = new Vector3(0,0,1);
-    }
-    else if(Vector3.Distance(currentTarget, shapeshifter.transform.position) < 1)
-    {
-      elaspedStopTime = UnityEngine.Random.Range(2.0F, 5.0F);
+    else if(Vector3.Distance(currentTarget, shapeshifter.transform.position) < 1) {
+      remainingRestTime = UnityEngine.Random.Range(2.0F, 5.0F);
+      shapeshifter.speed = new Vector3(0,0,0);
     }
   }
 
   public void OnAwareUpdate()
   {
+    shapeshifter.speed = new Vector3(0, 0, 0);
   }
 
   public void OnIntimidatedUpdate()
   {
-
+    shapeshifter.speed = new Vector3(0, 0, 0);
   }
 
   public void OnChaseUpdate()
   {
-
+    shapeshifter.speed = new Vector3(0, 0, 0);
   }
 
   public bool IsSeen() {
