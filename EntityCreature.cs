@@ -4,6 +4,8 @@ public class EntityCreature : Entity {
 
   public AICreature ai;
 
+  private AIHerd herd;
+
   public override void Start() {
     base.Start();
 
@@ -15,6 +17,11 @@ public class EntityCreature : Entity {
 
 
     ai = new AICreature(this, GameObject.Find("player").GetComponent<EntityPlayer>());
+    ai.herd = herd;
+  }
+
+  public void SetHerd(AIHerd herd) {
+    this.herd = herd;
   }
 
   public override void Update()

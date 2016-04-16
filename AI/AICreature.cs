@@ -7,6 +7,8 @@ public class AICreature
   private EntityCreature creature;
   private EntityPlayer player;
 
+  public AIHerd herd;
+
   private Vector3 loafPoint;
   private Vector3 currentTarget;
   private float remainingRestTime;
@@ -31,6 +33,10 @@ public class AICreature
 
       if(remainingRestTime <= 0) {
         remainingRestTime = 0;
+
+        if(herd != null) {
+          loafPoint = herd.position;
+        }
 
         currentTarget = new Vector3(Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS, 1, Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS) + loafPoint;
 

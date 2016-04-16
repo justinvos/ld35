@@ -11,8 +11,9 @@ public class AIShapeshifter
   public static float LOAFING_RADIUS = 20;
 
   private EntityPlayer player;
-
   private EntityShapeshifter shapeshifter;
+
+  private AIHerd herd;
   private Alertness alertness;
 
   private Vector3 loafPoint;
@@ -67,6 +68,10 @@ public class AIShapeshifter
 
       if(remainingRestTime <= 0) {
         remainingRestTime = 0;
+
+        if(herd != null) {
+          loafPoint = herd.position;
+        }
 
         currentTarget = new Vector3(Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS, 1, Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS) + loafPoint;
 
