@@ -12,6 +12,7 @@ public class Main : MonoBehaviour {
 		inputHandler.main = this;
 
 		entityPlayer = new GameObject("player").AddComponent<EntityPlayer>();
+		entityPlayer.transform.position = new Vector3(0, 1, 0);
 		Camera.main.transform.parent = entityPlayer.transform;
 	}
 
