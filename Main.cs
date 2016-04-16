@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Main : MonoBehaviour {
 
+	public static Random RANDOM = new Random();
+
 	public InputHandler inputHandler;
 	public EntityPlayer entityPlayer;
 
@@ -14,6 +16,9 @@ public class Main : MonoBehaviour {
 		entityPlayer = new GameObject("player").AddComponent<EntityPlayer>();
 		entityPlayer.transform.position = new Vector3(0, 1, 0);
 		Camera.main.transform.parent = entityPlayer.transform;
+
+
+		(new GameObject("Shapeshifter")).AddComponent<EntityShapeshifter>();
 	}
 
 	// Update is called once per frame
