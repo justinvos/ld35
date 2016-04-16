@@ -5,10 +5,12 @@ public class InputHandler : MonoBehaviour {
 
   public Main main;
 
+  private Vector3 defaultCursorPos;
 
   void Start()
   {
-
+    Cursor.visible = false;
+    Cursor.lockState = CursorLockMode.Locked;
   }
 
   // Update is called once per frame
@@ -28,7 +30,16 @@ public class InputHandler : MonoBehaviour {
     }
 
     main.entityPlayer.speed = new Vector3(x, 0, z) * 100;
-    //main.entityPlayer.transform.Translate(Time.deltaTime * x, 0, Time.deltaTime * z);
+
+
+    Debug.Log(Input.GetAxis("Mouse Y"));
+    Debug.Log(Input.GetAxis("Mouse X"));
+
+    main.entityPlayer.transform.eulerAngles += new Vector3(0, Input.GetAxis("Mouse X"), 0);
+    main.entityPlayer.transform.eulerAngles += new Vector3(-Input.GetAxis("Mouse Y"), 0, 0);
+
+
+
   }
 
 }
