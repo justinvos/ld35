@@ -6,8 +6,7 @@ public class InputHandler : MonoBehaviour {
   public Main main;
   public float mouseSensitivity;
 
-  void Start()
-  {
+  void Start() {
     Cursor.visible = false;
     Cursor.lockState = CursorLockMode.Locked;
     mouseSensitivity = 2;
@@ -29,7 +28,7 @@ public class InputHandler : MonoBehaviour {
       x--;
     }
 
-    main.entityPlayer.speed = new Vector3(x, 0, z) * 100;
+    main.entityPlayer.speed = new Vector3(x, 0, z) * 3;
 
     main.entityPlayer.transform.eulerAngles += new Vector3(0, Input.GetAxis("Mouse X"), 0) * 0.75f * mouseSensitivity;
     Camera.main.transform.eulerAngles -= new Vector3(Input.GetAxis("Mouse Y"), 0, 0) * mouseSensitivity;

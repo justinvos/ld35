@@ -11,6 +11,6 @@ public class Entity : MonoBehaviour {
   }
 
   public void Update() {
-    characterController.SimpleMove(Vector3.Normalize(transform.TransformDirection(speed)));
+    characterController.SimpleMove(transform.TransformDirection(speed));
   }
 }

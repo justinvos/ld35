@@ -5,8 +5,21 @@ public class EntityShapeshifter : Entity {
 
   public override void Start() {
     base.Start();
+
+    GameObject mesh = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+
+    mesh.transform.parent = transform;
+    mesh.transform.localPosition = Vector3.zero;
+
+
     ai = new AIShapeshifter(this, GameObject.Find("player").GetComponent<EntityPlayer>());
 
-    GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.parent = transform;
+
+  }
+
+  void Update()
+  {
+    base.Update();
+    ai.OnUpdate();
   }
 }

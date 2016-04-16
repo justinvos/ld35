@@ -22,6 +22,7 @@ public class AIShapeshifter
     alertness = Alertness.LOAF;
 
     loafPoint = shapeshifter.transform.position;
+    currentTarget = shapeshifter.transform.position;
   }
 
   public void OnUpdate()
