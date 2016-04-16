@@ -10,7 +10,7 @@ public class InputHandler : MonoBehaviour {
   {
     Cursor.visible = false;
     Cursor.lockState = CursorLockMode.Locked;
-    sensitivity = 2;
+    mouseSensitivity = 2;
   }
 
   // Update is called once per frame
@@ -31,8 +31,8 @@ public class InputHandler : MonoBehaviour {
 
     main.entityPlayer.speed = new Vector3(x, 0, z) * 100;
 
-    main.entityPlayer.transform.eulerAngles += new Vector3(0, Input.GetAxis("Mouse X"), 0) * mouseSensitivity;
-    main.entityPlayer.transform.eulerAngles += new Vector3(-Input.GetAxis("Mouse Y"), 0, 0) * mouseSensitivity;
+    main.entityPlayer.transform.eulerAngles += new Vector3(0, Input.GetAxis("Mouse X"), 0) * 0.75f * mouseSensitivity;
+    Camera.main.transform.eulerAngles -= new Vector3(Input.GetAxis("Mouse Y"), 0, 0) * mouseSensitivity;
 
   }
 
