@@ -17,7 +17,7 @@ public class EntityShapeshifter : Entity {
 
   }
 
-  void Update()
+  public override void Update()
   {
     base.Update();
     ai.OnUpdate();

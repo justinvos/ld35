@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour {
     characterController = gameObject.AddComponent<CharacterController>();
   }
 
-  public void Update() {
+  public virtual void Update() {
     characterController.SimpleMove(transform.TransformDirection(speed));
   }
 }
