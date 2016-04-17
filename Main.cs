@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class Main : MonoBehaviour {
 
 	public GameObject gabbit;
+	public GameObject lizard;
+	public GameObject bear;
 
 	public static Random RANDOM = new Random();
 
