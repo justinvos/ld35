@@ -40,4 +40,13 @@ public class Main : MonoBehaviour {
 
 	void Update() {}
 
+
+	public GameObject Spawn(GameObject prefab, Vector3 position, float rotation) {
+    GameObject go = Instantiate(prefab);
+    go.transform.position = position;
+    go.transform.Rotate(0, rotation, 0);
+
+    return go;
+  }
+
 }
