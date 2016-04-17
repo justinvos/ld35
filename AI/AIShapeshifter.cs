@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Alertness {LOAF, AWARE, INTIMIDATED, CHASE};
+public enum Alertness {LOAF, AWARE, INTIMIDATED};
 
 public class AIShapeshifter : AICreature {
   public static float MAX_AWARE_TRIGGER = 50;
@@ -12,6 +12,7 @@ public class AIShapeshifter : AICreature {
 
   private float timeSinceLastShapeshift;
   private float timeSinceLastSeen;
+  private bool changingShape;
 
   private Alertness alertness;
 
@@ -32,11 +33,7 @@ public class AIShapeshifter : AICreature {
       timeSinceLastSeen = 0;
     }
 
-    if(distance < MAX_CHASE_TRIGGER) {
-      if(shapeshifter.alertness != Alertness.CHASE) {
-        shapeshifter.alertness = Alertness.CHASE;
-      }
-    } else if(distance < MAX_INTIMIDATED_TRIGGER) {
+    if(distance < MAX_INTIMIDATED_TRIGGER) {
       if(shapeshifter.alertness != Alertness.INTIMIDATED) {
         shapeshifter.alertness = Alertness.INTIMIDATED;
         shapeshifter.herd.RemoveMember(shapeshifter);
@@ -61,10 +58,6 @@ public class AIShapeshifter : AICreature {
       case Alertness.INTIMIDATED:
         OnIntimidatedUpdate();
         break;
-      case Alertness.CHASE:
-        OnChaseUpdate();
-        break;
-
 
     }
   }
@@ -84,6 +77,13 @@ public class AIShapeshifter : AICreature {
     //shapeshifter.speed = new Vector3(0, 0, 0);
     if(shapeshifter.herd == null) {
       FindNewHerd(45);
+      changingShape = true;
+    }
+    if (changingShape) {
+      if (timeSinceLastSeen > 2 & Vector3.Distance(shapeshifter.transform.position, shapeshifter.herd.transform.position) > shapeshifter.herd.radius) {
+        shapeshift(shapeshifter.herd.creatureType);
+        changingShape = false;
+      }
     }
 
     MovementUpdate();
@@ -95,10 +95,6 @@ public class AIShapeshifter : AICreature {
     }
 
     MovementUpdate();
-  }
-
-  public void OnChaseUpdate() {
-    shapeshifter.speed = new Vector3(0, 0, 0);
   }
 
   public void FindNewHerd(float angle) {
@@ -121,7 +117,7 @@ public class AIShapeshifter : AICreature {
     //loafPoint = herd.transform.position;
     remainingRestTime = 2F;
     shapeshifter.SetResting();
-    FindNewTargetWhileLoafing();
+    FindNewTarget();
   }
 
   public bool IsSeen() {

@@ -26,6 +26,8 @@ public class EntityShapeshifter : EntityCreature {
     GameObject go = main.Spawn("shapeshifterMesh", creatureType, Vector3.zero, 0);
     go.transform.parent = gameObject.transform;
 
+    this.creatureType = creatureType;
+
     go.transform.localPosition = Vector3.zero;
 
     go.transform.localRotation = Quaternion.identity;

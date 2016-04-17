@@ -13,6 +13,7 @@ public class EntityCreature : Entity {
   public Vector3 currentTarget;
   public float remainingRestTime;
   public float rotateAngle;
+  public string creatureLabel;
   //DEBUG END
 
   public virtual void Start() {
@@ -31,6 +32,7 @@ public class EntityCreature : Entity {
     currentTarget = ai.currentTarget;
     remainingRestTime = ai.remainingRestTime;
     rotateAngle = ai.rotateAngle;
+    creatureLabel = creatureType.GetLabel();
     //DEBUG END
   }
 }
