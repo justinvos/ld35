@@ -10,6 +10,8 @@ public class AIShapeshifter : AICreature {
 
   private EntityShapeshifter shapeshifter;
 
+  private float timeSinceLastShapeshift;
+
   private Alertness alertness;
 
   public AIShapeshifter(Main main, EntityShapeshifter shapeshifter, EntityPlayer player) : base(main, shapeshifter, player) {
@@ -21,6 +23,7 @@ public class AIShapeshifter : AICreature {
 
   public override void OnUpdate() {
     double distance = Vector3.Distance(shapeshifter.transform.position, player.transform.position);
+    timeSinceLastShapeshift += Time.deltaTime;
 
     if(distance < MAX_CHASE_TRIGGER) {
       alertness = Alertness.CHASE;
@@ -45,6 +48,11 @@ public class AIShapeshifter : AICreature {
       case Alertness.CHASE:
         OnChaseUpdate();
         break;
+    }
+
+    if (!IsSeen() & timeSinceLastShapeshift > 15.0f) {
+      shapeshifter.shapeshift(CreatureType.CREATURE_TYPES[Random.Range(0, CreatureType.CREATURE_TYPES.Count)]);
+      timeSinceLastShapeshift = 0;
     }
   }
 

@@ -29,10 +29,9 @@ public class Main : MonoBehaviour {
 
 		world = new World(this);
 
-		GameObject shapeshifterGameObject = Spawn("shapeshifter", CreatureType.GABBIT, new Vector3(40, 1, 40), 0);
+		GameObject shapeshifterGameObject = Spawn("shapeshifter", CreatureType.CREATURE_TYPES[Random.Range(0, CreatureType.CREATURE_TYPES.Count)], new Vector3(40, 1, 40), 0);
 		EntityShapeshifter shapeshifter = shapeshifterGameObject.AddComponent<EntityShapeshifter>();
 		shapeshifter.ai = new AIShapeshifter(this, shapeshifter, entityPlayer);
-
 
 
 		world.SpawnHerd(CreatureType.GABBIT, 7, 20);
