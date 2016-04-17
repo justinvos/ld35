@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class AICreature
-{
+public class AICreature {
   public static float LOAFING_RADIUS = 20;
 
   private EntityCreature creature;
@@ -21,12 +20,12 @@ public class AICreature
     currentTarget = creature.transform.position;
   }
 
-  public void OnUpdate() {
+  public virtual void OnUpdate() {
     OnLoafUpdate();
   }
 
 
-  public void OnLoafUpdate() {
+  public virtual void OnLoafUpdate() {
 
     if(remainingRestTime > 0) {
       remainingRestTime = remainingRestTime - Time.deltaTime;
