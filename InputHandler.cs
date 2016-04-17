@@ -44,6 +44,39 @@ public class InputHandler : MonoBehaviour {
       }
     }
 
+
+    // Capturing
+    /*if(Input.GetMouseButtonDown(0)) {
+      Debug.Log("CLICK");
+      Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+      RaycastHit hit;
+      if (main.entityPlayer.gameObject.GetComponent<Collider>().Raycast(ray, out hit, 3.0F)) {
+        Debug.Log("hit " + hit.transform.gameObject.name);
+
+        if(hit.transform.gameObject.GetComponent<EntityShapeshifter>() != null) {
+          Debug.Log("SHAPESHIFTER");
+        }
+        else if(hit.transform.gameObject.GetComponent<EntityCreature>() != null) {
+          Debug.Log("CREATURE");
+        }
+      }
+    }*/
+
+    RaycastHit hit;
+
+    if(Input.GetMouseButtonDown(0)) {
+      if (Physics.Raycast(main.entityPlayer.transform.position, main.entityPlayer.transform.forward, out hit)) {
+
+        if(hit.transform.gameObject.GetComponent<EntityShapeshifter>() != null) {
+          Debug.Log("SS");
+        } else if(hit.transform.gameObject.GetComponent<EntityCreature>() != null) {
+          Debug.Log("C");
+        }
+      }
+
+    }
+
+
   }
 
 }
