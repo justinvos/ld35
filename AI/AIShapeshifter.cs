@@ -24,7 +24,13 @@ public class AIShapeshifter : AICreature {
 
   public override void OnUpdate() {
     double distance = Vector3.Distance(shapeshifter.transform.position, player.transform.position);
+
     timeSinceLastShapeshift += Time.deltaTime;
+    timeSinceLastSeen += Time.deltaTime;
+
+    if (IsSeen()) {
+      timeSinceLastSeen = 0;
+    }
 
     if(distance < MAX_CHASE_TRIGGER) {
       if(shapeshifter.alertness != Alertness.CHASE) {
@@ -58,6 +64,8 @@ public class AIShapeshifter : AICreature {
       case Alertness.CHASE:
         OnChaseUpdate();
         break;
+
+
     }
   }
 
@@ -67,16 +75,8 @@ public class AIShapeshifter : AICreature {
     }
     MovementUpdate();
 
-    if (!IsSeen() & timeSinceLastShapeshift > 15.0f) {
-      if (timeSinceLastSeen > 3.0f) {
-        shapeshifter.shapeshift(CreatureType.CREATURE_TYPES[Random.Range(0, CreatureType.CREATURE_TYPES.Count)]);
-        timeSinceLastShapeshift = 0;
-        Debug.Log("Shapeshifter shifted its shape");
-      } else {
-        timeSinceLastSeen += Time.deltaTime;
-      }
-    } else {
-      timeSinceLastSeen = 0;
+    if (timeSinceLastSeen > 3.0f & timeSinceLastShapeshift > 12.0f) {
+      shapeshift(CreatureType.CREATURE_TYPES[Random.Range(0, CreatureType.CREATURE_TYPES.Count)]);
     }
   }
 
@@ -105,12 +105,16 @@ public class AIShapeshifter : AICreature {
     List<EntityHerd> potentialHerds = new List<EntityHerd>();
 
     for(int i = 0; i < main.herds.Count; i++) {
-      if(Vector3.Distance(main.herds[i].transform.position, shapeshifter.transform.position) <= 400 && Vector3.Angle(player.transform.position - shapeshifter.transform.position, main.herds[i].transform.position - shapeshifter.transform.position) > angle && (shapeshifter.herd == null || shapeshifter.herd != main.herds[i])) {
+      if(Vector3.Distance(main.herds[i].transform.position, shapeshifter.transform.position) <= 400/* && Vector3.Angle(player.transform.position - shapeshifter.transform.position, main.herds[i].transform.position - shapeshifter.transform.position) > angle */ && (shapeshifter.herd == null || shapeshifter.herd != main.herds[i])) {
         potentialHerds.Add(main.herds[i]);
       }
     }
 
-    potentialHerds[(int)Mathf.Round(Random.Range(0.0F, potentialHerds.Count - 1))].AddMember(shapeshifter);
+    if(potentialHerds.Count >= 1) {
+      potentialHerds[(int)Mathf.Round(Random.Range(0.0F, potentialHerds.Count - 1))].AddMember(shapeshifter);
+    } else {
+      Debug.Log("0 herds");
+    }
 
 
 
@@ -130,5 +134,10 @@ public class AIShapeshifter : AICreature {
     } else {
       return false;
     }
+  }
+
+  public void shapeshift(CreatureType creatureType) {
+    shapeshifter.shapeshift(creatureType);
+    timeSinceLastShapeshift = 0;
   }
 }

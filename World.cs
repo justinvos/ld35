@@ -15,6 +15,8 @@ public class World {
 
     EntityHerd herd = new GameObject("herd").AddComponent<EntityHerd>();
 
+    herd.creatureType = creatureType;
+
     herd.radius = radius;
 
     main.herds.Add(herd);
