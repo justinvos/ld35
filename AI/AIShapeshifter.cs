@@ -7,7 +7,6 @@ public class AIShapeshifter : AICreature {
   public static float MAX_INTIMIDATED_TRIGGER = 10;
   public static float MAX_CHASE_TRIGGER = 4;
 
-  private EntityPlayer player;
   private EntityShapeshifter shapeshifter;
 
   private Alertness alertness;
@@ -16,7 +15,7 @@ public class AIShapeshifter : AICreature {
   private Vector3 currentTarget;
   private float remainingRestTime;
 
-  public AIShapeshifter(EntityShapeshifter shapeshifter, EntityPlayer player) : base(shapeshifter, player) {
+  public AIShapeshifter(Main main, EntityShapeshifter shapeshifter, EntityPlayer player) : base(main, shapeshifter, player) {
     this.shapeshifter = shapeshifter;
     this.player = player;
 
@@ -93,6 +92,14 @@ public class AIShapeshifter : AICreature {
 
   public void OnChaseUpdate() {
     shapeshifter.speed = new Vector3(0, 0, 0);
+  }
+
+  public void FindNewHerdWhileAware() {
+
+  }
+
+  public void FindNewHerdWhileIntimidated() {
+
   }
 
   public bool IsSeen() {

@@ -3,6 +3,7 @@ using UnityEngine;
 public class AICreature {
   public static float LOAFING_RADIUS = 20;
 
+  private Main main;
   private EntityCreature creature;
   private EntityPlayer player;
 
@@ -12,7 +13,7 @@ public class AICreature {
   private Vector3 currentTarget;
   private float remainingRestTime;
 
-  public AICreature(EntityCreature creature, EntityPlayer player) {
+  public AICreature(Main main, EntityCreature creature, EntityPlayer player) {
     this.creature = creature;
     this.player = player;
 
