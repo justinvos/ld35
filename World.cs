@@ -16,7 +16,11 @@ public class World {
     AIHerd herd = new AIHerd(new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100)));
     //s
     for(int i = 0; i < n; i++) {
-      main.SpawnCreature(creatureType, new Vector3(Random.Range(-radius, radius), 1.0F, Random.Range(-radius, radius)), Random.Range(0, 360));
+      GameObject go = main.Spawn(creatureType.GetLabel() + i, creatureType, new Vector3(Random.Range(-radius, radius), 1.0F, Random.Range(-radius, radius)), Random.Range(0, 360));
+
+      EntityCreature creature = go.AddComponent<EntityCreature>();
+
+  		creature.ai = new AICreature(main, creature, main.entityPlayer);
     }
   }
 

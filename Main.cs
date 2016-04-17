@@ -29,9 +29,11 @@ public class Main : MonoBehaviour {
 
 		world = new World(this);
 
-		GameObject shapeshifter = new GameObject("Shapeshifter");
-		shapeshifter.transform.position = new Vector3(40, 1, 40);
-		shapeshifter.AddComponent<EntityShapeshifter>();
+		GameObject shapeshifterGameObject = Spawn("shapeshifter", CreatureType.GABBIT, new Vector3(40, 1, 40), 0);
+		EntityShapeshifter shapeshifter = shapeshifterGameObject.AddComponent<EntityShapeshifter>();
+		shapeshifter.ai = new AIShapeshifter(this, shapeshifter, entityPlayer);
+
+
 
 		world.SpawnHerd(CreatureType.GABBIT, 7, 20);
 
@@ -49,15 +51,11 @@ public class Main : MonoBehaviour {
 	void Update() {}
 
 
-	public GameObject SpawnCreature(CreatureType creatureType, Vector3 position, float rotation) {
+	public GameObject Spawn(string label, CreatureType creatureType, Vector3 position, float rotation) {
     GameObject go = Instantiate(creatureType.GetPrefab());
+		go.name = label;
     go.transform.position = position;
     go.transform.Rotate(0, rotation, 0);
-
-		EntityCreature creature = go.AddComponent<EntityCreature>();
-
-		creature.ai = new AICreature(this, creature, entityPlayer);
-
 
     return go;
   }
