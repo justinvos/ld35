@@ -5,6 +5,8 @@ public class Entity : MonoBehaviour {
 
   public CharacterController characterController;
   public Vector3 speed;
+  public float angularVelocity;
+
   protected Main main;
 
   public virtual void Awake()
@@ -15,6 +17,7 @@ public class Entity : MonoBehaviour {
 
   public virtual void Update() {
     characterController.SimpleMove(transform.TransformDirection(speed));
+    transform.Rotate(0, angularVelocity * Time.deltaTime, 0);
   }
 
   public void SetResting()

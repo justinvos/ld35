@@ -4,9 +4,9 @@ using UnityEngine;
 public enum Alertness {LOAF, AWARE, INTIMIDATED, CHASE};
 
 public class AIShapeshifter : AICreature {
-  public static float MAX_AWARE_TRIGGER = 30;
-  public static float MAX_INTIMIDATED_TRIGGER = 10;
-  public static float MAX_CHASE_TRIGGER = 4;
+  public static float MAX_AWARE_TRIGGER = 50;
+  public static float MAX_INTIMIDATED_TRIGGER = 20;
+  public static float MAX_CHASE_TRIGGER = 10;
 
   private EntityShapeshifter shapeshifter;
 
