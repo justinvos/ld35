@@ -7,6 +7,7 @@ public class Main : MonoBehaviour {
 	public GameObject gabbit;
 	public GameObject lizard;
 	public GameObject bear;
+	public GameObject squirrel;
 
 	public static Random RANDOM = new Random();
 
@@ -42,7 +43,7 @@ public class Main : MonoBehaviour {
 
 		world.SpawnHerd(CreatureType.BEAR, 3, 20);
 
-		world.SpawnHerd(CreatureType.GABBIT, 7, 20);
+		world.SpawnHerd(CreatureType.SQUIRREL, 7, 20);
 
 		/*AIHerd herd = new AIHerd(new Vector3(30, 1, 0));
 		herds.Add(herd);

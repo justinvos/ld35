@@ -12,6 +12,7 @@ public class CreatureType {
   public static CreatureType GABBIT;
   public static CreatureType LIZARD;
   public static CreatureType BEAR;
+  public static CreatureType SQUIRREL;
 
   static CreatureType() {
     Main main = GameObject.Find("Main").GetComponent<Main>();
@@ -21,6 +22,7 @@ public class CreatureType {
     GABBIT = new CreatureType("Gabbit", main.gabbit);
     LIZARD = new CreatureType("Lizard", main.lizard);
     BEAR = new CreatureType("Bear", main.bear);
+    SQUIRREL = new CreatureType("squirrel", main.squirrel);
   }
 
   private int id;
