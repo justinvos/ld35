@@ -13,6 +13,8 @@ public class Main : MonoBehaviour {
 	public InputHandler inputHandler;
 	public EntityPlayer entityPlayer;
 
+	public World world;
+
 	public List<AIHerd> herds;
 
 	void Start() {
@@ -25,28 +27,37 @@ public class Main : MonoBehaviour {
 		entityPlayer.transform.position = new Vector3(0, 1, 0);
 		Camera.main.transform.parent = entityPlayer.transform;
 
+		world = new World(this);
+
 		GameObject shapeshifter = new GameObject("Shapeshifter");
 		shapeshifter.transform.position = new Vector3(40, 1, 40);
 		shapeshifter.AddComponent<EntityShapeshifter>();
 
-		AIHerd herd = new AIHerd(new Vector3(30, 1, 0));
+		world.SpawnHerd(CreatureType.GABBIT, 7, 20);
+
+		/*AIHerd herd = new AIHerd(new Vector3(30, 1, 0));
 		herds.Add(herd);
 
 		for(int i = 0; i < 7; i++) {
 			GameObject testCreature = new GameObject("testCreature" + i);
 			testCreature.transform.position = new Vector3(20, 1, 3*i);
 			testCreature.AddComponent<EntityGabbit>().SetHerd(herd);
-		}
+		}*/
 
 	}
 
 	void Update() {}
 
 
-	public GameObject Spawn(GameObject prefab, Vector3 position, float rotation) {
-    GameObject go = Instantiate(prefab);
+	public GameObject SpawnCreature(CreatureType creatureType, Vector3 position, float rotation) {
+    GameObject go = Instantiate(creatureType.GetPrefab());
     go.transform.position = position;
     go.transform.Rotate(0, rotation, 0);
+
+		EntityCreature creature = go.AddComponent<EntityCreature>();
+
+		creature.ai = new AICreature(this, creature, entityPlayer);
+
 
     return go;
   }

@@ -3,12 +3,18 @@ using UnityEngine;
 public class EntityCreature : Entity {
 
   public AICreature ai;
-  public GameObject mesh;
   public AIHerd herd;
 
+  //DEBUG Start
+
+  public Vector3 loafPoint;
+  public Vector3 currentTarget;
+  public float remainingRestTime;
+  public float rotateAngle;
+  //DEBUG END
+
   public virtual void Start() {
-    mesh.transform.parent = transform;
-    mesh.transform.localPosition = Vector3.zero;
+    //mesh.transform.localPosition = Vector3.zero;
 
     ai.herd = herd;
   }
@@ -22,5 +28,11 @@ public class EntityCreature : Entity {
     base.Update();
     ai.OnUpdate();
 
+    //DEBUG Start
+    loafPoint = ai.loafPoint;
+    currentTarget = ai.currentTarget;
+    remainingRestTime = ai.remainingRestTime;
+    rotateAngle = ai.rotateAngle;
+    //DEBUG END
   }
 }

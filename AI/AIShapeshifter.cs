@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Alertness {LOAF, AWARE, INTIMIDATED, CHASE};
@@ -11,18 +12,11 @@ public class AIShapeshifter : AICreature {
 
   private Alertness alertness;
 
-  private Vector3 loafPoint;
-  private Vector3 currentTarget;
-  private float remainingRestTime;
-
   public AIShapeshifter(Main main, EntityShapeshifter shapeshifter, EntityPlayer player) : base(main, shapeshifter, player) {
     this.shapeshifter = shapeshifter;
     this.player = player;
 
     alertness = Alertness.LOAF;
-
-    loafPoint = shapeshifter.transform.position;
-    currentTarget = shapeshifter.transform.position;
   }
 
   public override void OnUpdate() {
@@ -54,36 +48,12 @@ public class AIShapeshifter : AICreature {
     }
   }
 
-  public override void OnLoafUpdate() {
-
-    if(remainingRestTime > 0) {
-      remainingRestTime = remainingRestTime - Time.deltaTime;
-
-      if(remainingRestTime <= 0) {
-        remainingRestTime = 0;
-
-        if(herd != null) {
-          loafPoint = herd.position;
-        }
-
-        currentTarget = new Vector3(Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS, 1, Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS) + loafPoint;
-
-        shapeshifter.transform.LookAt(currentTarget);
-
-        shapeshifter.speed = new Vector3(0,0,1);
-      }
-    }
-    else if(Vector3.Distance(currentTarget, shapeshifter.transform.position) < 1) {
-      remainingRestTime = UnityEngine.Random.Range(2.0F, 5.0F);
-      shapeshifter.speed = new Vector3(0,0,0);
-    }
-    else {
-      shapeshifter.speed = new Vector3(0,0,1); // Eventually move to OnLoafStart() event handler
-    }
-  }
-
   public void OnAwareUpdate() {
-    shapeshifter.speed = new Vector3(0, 0, 0);
+    //shapeshifter.speed = new Vector3(0, 0, 0);
+    FindNewHerdWhileAware();
+
+    OnLoafUpdate();
+
   }
 
   public void OnIntimidatedUpdate() {
@@ -95,7 +65,15 @@ public class AIShapeshifter : AICreature {
   }
 
   public void FindNewHerdWhileAware() {
+    List<AIHerd> potentialHerds = new List<AIHerd>();
 
+    for(int i = 0; i < main.herds.Count; i++) {
+      if(Vector3.Distance(main.herds[i].position, shapeshifter.transform.position) <= 200 && Vector3.Angle(player.transform.position - shapeshifter.transform.position, main.herds[i].position - shapeshifter.transform.position) > 45) {
+        potentialHerds.Add(main.herds[i]);
+      }
+    }
+
+    herd = potentialHerds[(int)Mathf.Round(Random.Range(0.0F, potentialHerds.Count))];
   }
 
   public void FindNewHerdWhileIntimidated() {
@@ -103,6 +81,7 @@ public class AIShapeshifter : AICreature {
   }
 
   public bool IsSeen() {
-    return shapeshifter.mesh.GetComponent<Renderer>().isVisible;
+    //return shapeshifter.mesh.GetComponent<Renderer>().isVisible;
+    return false;
   }
 }
