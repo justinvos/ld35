@@ -6,9 +6,7 @@ public class EntityCreature : Entity {
   public GameObject mesh;
   public AIHerd herd;
 
-  public override void Start() {
-    base.Start();
-
+  public virtual void Start() {
     mesh.transform.parent = transform;
     mesh.transform.localPosition = Vector3.zero;
 
@@ -23,5 +21,6 @@ public class EntityCreature : Entity {
   {
     base.Update();
     ai.OnUpdate();
+
   }
 }
