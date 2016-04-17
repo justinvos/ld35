@@ -8,6 +8,8 @@ public class Main : MonoBehaviour {
 	public GameObject lizard;
 	public GameObject bear;
 	public GameObject squirrel;
+	public GameObject elephantPig;
+	public GameObject pterodactyl;
 
 	public static Random RANDOM = new Random();
 
