@@ -16,4 +16,9 @@ public class EntityHerd : MonoBehaviour {
     creatures.Add(creature);
     creature.herd = this;
   }
+
+  public void RemoveMember(EntityCreature creature) {
+    creatures.Remove(creature);
+    creature.herd = null;
+  }
 }

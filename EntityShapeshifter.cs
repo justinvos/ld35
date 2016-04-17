@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EntityShapeshifter : EntityCreature {
 
-  public CreatureType form;
+  public Alertness alertness;
 
   public override void Start() {
 
@@ -15,7 +15,6 @@ public class EntityShapeshifter : EntityCreature {
   }
 
   public void shapeshift(CreatureType creatureType) {
-    form = creatureType;
     Destroy(transform.GetChild(0).gameObject, 0f);
 
     GameObject go = main.Spawn("shapeshifterMesh", creatureType, Vector3.zero, 0);

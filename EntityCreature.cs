@@ -5,6 +5,8 @@ public class EntityCreature : Entity {
   public AICreature ai;
   public EntityHerd herd;
 
+  public CreatureType creatureType;
+
   public Vector3 loafPoint;
 
   //DEBUG Start

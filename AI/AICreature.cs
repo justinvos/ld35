@@ -1,15 +1,11 @@
 using UnityEngine;
 
 public class AICreature {
-  public static float LOAFING_RADIUS = 20;
 
   protected Main main;
   private EntityCreature creature;
   protected EntityPlayer player;
 
-  //public EntityHerd herd;
-
-  //public Vector3 loafPoint;
   public Vector3 currentTarget;
   public float remainingRestTime;
   public float rotateAngle;
@@ -65,7 +61,7 @@ public class AICreature {
       creature.loafPoint = creature.herd.transform.position;
     }
 
-    currentTarget = new Vector3(Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS, 0, Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS) + creature.loafPoint;
+    currentTarget = new Vector3(Random.Range(-1.0f, 1.0f) * creature.creatureType.GetHerdRadius(), 0, Random.Range(-1.0f, 1.0f) * creature.creatureType.GetHerdRadius()) + creature.loafPoint;
 
     Vector3 delta = currentTarget - creature.transform.position;
 

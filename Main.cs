@@ -29,8 +29,12 @@ public class Main : MonoBehaviour {
 
 		world = new World(this);
 
-		GameObject shapeshifterGameObject = Spawn("shapeshifter", CreatureType.CREATURE_TYPES[Random.Range(0, CreatureType.CREATURE_TYPES.Count)], new Vector3(40, 1, 40), 0);
+
+		CreatureType ssStartType = CreatureType.CREATURE_TYPES[Random.Range(0, CreatureType.CREATURE_TYPES.Count)];
+		GameObject shapeshifterGameObject = Spawn("shapeshifter", ssStartType, new Vector3(40, 1, 40), 0);
 		EntityShapeshifter shapeshifter = shapeshifterGameObject.AddComponent<EntityShapeshifter>();
+
+		shapeshifter.creatureType = ssStartType;
 		shapeshifter.ai = new AIShapeshifter(this, shapeshifter, entityPlayer);
 
 

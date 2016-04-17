@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class CreatureType {
 
+  public static float DEFAULT_HERD_RADIUS = 20.0F;
+
   public static Main main;
 
   public static List<CreatureType> CREATURE_TYPES;
@@ -25,13 +27,22 @@ public class CreatureType {
   private string label;
   private GameObject prefab;
 
+  private float herdRadius;
+
   public CreatureType(string label, GameObject prefab) {
     this.label = label;
     this.prefab = prefab;
 
+    this.herdRadius = CreatureType.DEFAULT_HERD_RADIUS;
+
     CreatureType.CREATURE_TYPES.Add(this);
 
     id = CreatureType.CREATURE_TYPES.Count - 1;
+  }
+
+  public CreatureType SetHerdRadius(float herdRadius) {
+    this.herdRadius = herdRadius;
+    return this;
   }
 
   public int GetId() {
@@ -44,5 +55,9 @@ public class CreatureType {
 
   public string GetLabel() {
     return label;
+  }
+
+  public float GetHerdRadius() {
+    return herdRadius;
   }
 }

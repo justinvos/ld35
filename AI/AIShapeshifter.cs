@@ -18,7 +18,7 @@ public class AIShapeshifter : AICreature {
     this.shapeshifter = shapeshifter;
     this.player = player;
 
-    alertness = Alertness.LOAF;
+    shapeshifter.alertness = Alertness.LOAF;
   }
 
   public override void OnUpdate() {
@@ -26,16 +26,25 @@ public class AIShapeshifter : AICreature {
     timeSinceLastShapeshift += Time.deltaTime;
 
     if(distance < MAX_CHASE_TRIGGER) {
-      alertness = Alertness.CHASE;
+      if(shapeshifter.alertness != Alertness.CHASE) {
+        shapeshifter.alertness = Alertness.CHASE;
+      }
     } else if(distance < MAX_INTIMIDATED_TRIGGER) {
-      alertness = Alertness.INTIMIDATED;
+      if(shapeshifter.alertness != Alertness.INTIMIDATED) {
+        shapeshifter.alertness = Alertness.INTIMIDATED;
+        shapeshifter.herd.RemoveMember(shapeshifter);
+      }
     } else if(distance < MAX_AWARE_TRIGGER) {
-      alertness = Alertness.AWARE;
-    } else {
-      alertness = Alertness.LOAF;
+      if(shapeshifter.alertness != Alertness.AWARE) {
+        shapeshifter.alertness = Alertness.AWARE;
+      }
+    } else if(distance >= MAX_AWARE_TRIGGER) {
+      if(shapeshifter.alertness != Alertness.LOAF) {
+        shapeshifter.alertness = Alertness.LOAF;
+      }
     }
 
-    switch(alertness) {
+    switch(shapeshifter.alertness) {
       case Alertness.LOAF:
         OnLoafUpdate();
         break;
@@ -58,7 +67,7 @@ public class AIShapeshifter : AICreature {
 
   public override void OnLoafUpdate() {
     if(shapeshifter.herd != null) {
-      shapeshifter.herd = null;
+      shapeshifter.herd.RemoveMember(shapeshifter);
     }
     MovementUpdate();
   }
@@ -74,7 +83,7 @@ public class AIShapeshifter : AICreature {
 
   public void OnIntimidatedUpdate() {
     if(shapeshifter.herd == null) {
-      FindNewHerd(70);
+      FindNewHerd(100);
     }
 
     MovementUpdate();
@@ -88,14 +97,14 @@ public class AIShapeshifter : AICreature {
     List<EntityHerd> potentialHerds = new List<EntityHerd>();
 
     for(int i = 0; i < main.herds.Count; i++) {
-      if(Vector3.Distance(main.herds[i].transform.position, shapeshifter.transform.position) <= 200 && Vector3.Angle(player.transform.position - shapeshifter.transform.position, main.herds[i].transform.position - shapeshifter.transform.position) > angle && (shapeshifter.herd == null || shapeshifter.herd != main.herds[i])) {
+      if(Vector3.Distance(main.herds[i].transform.position, shapeshifter.transform.position) <= 400 && Vector3.Angle(player.transform.position - shapeshifter.transform.position, main.herds[i].transform.position - shapeshifter.transform.position) > angle && (shapeshifter.herd == null || shapeshifter.herd != main.herds[i])) {
         potentialHerds.Add(main.herds[i]);
       }
     }
 
     potentialHerds[(int)Mathf.Round(Random.Range(0.0F, potentialHerds.Count - 1))].AddMember(shapeshifter);
 
-    
+
 
     //loafPoint = herd.transform.position;
     remainingRestTime = 2F;

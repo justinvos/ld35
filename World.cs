@@ -24,6 +24,7 @@ public class World {
 
       EntityCreature creature = go.AddComponent<EntityCreature>();
 
+      creature.creatureType = creatureType;
   		creature.ai = new AICreature(main, creature, main.entityPlayer);
 
       herd.AddMember(creature);
