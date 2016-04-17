@@ -126,7 +126,7 @@ public class AICreature {
     float x = Random.Range(-1.0f, 1.0f) * creature.creatureType.GetHerdRadius();
     float z = Random.Range(-1.0f, 1.0f) * creature.creatureType.GetHerdRadius();
 
-    return new Vector3(x, 0, z) + creature.loafPoint;
+    return new Vector3(x, 1, z) + creature.loafPoint;
   }
 
   /*

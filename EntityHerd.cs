@@ -7,9 +7,16 @@ public class EntityHerd : MonoBehaviour {
   public float radius;
 
   public List<EntityCreature> creatures;
+  public AIHerd ai;
 
   void Awake(){
     creatures = new List<EntityCreature>();
+
+    ai = new AIHerd(this);
+  }
+
+  void Update() {
+    ai.OnUpdate();
   }
 
   public void AddMember(EntityCreature creature) {

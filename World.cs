@@ -15,12 +15,14 @@ public class World {
 
     EntityHerd herd = new GameObject("herd").AddComponent<EntityHerd>();
 
+    herd.radius = radius;
+
     main.herds.Add(herd);
 
     herd.transform.position = new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100));
 
     for(int i = 0; i < n; i++) {
-      GameObject go = main.Spawn(creatureType.GetLabel() + i, creatureType, new Vector3(Random.Range(-radius, radius), 1.0F, Random.Range(-radius, radius)), Random.Range(0, 360));
+      GameObject go = main.Spawn(creatureType.GetLabel() + i, creatureType, new Vector3(herd.transform.position.x + Random.Range(-radius, radius), 1.0F, herd.transform.position.z + Random.Range(-radius, radius)), Random.Range(0, 360));
 
       EntityCreature creature = go.AddComponent<EntityCreature>();
 
