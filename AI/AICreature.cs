@@ -42,8 +42,17 @@ public class AICreature {
     float distanceFromPlayer = Vector3.Distance(player.transform.position, creature.transform.position);
     Vector3 displacementToPlayer = player.transform.position - creature.transform.position;
 
+    RaycastHit hit;
+
+    if(Physics.Raycast(creature.transform.position, creature.transform.forward, out hit, 3)) {
+      currentTarget = FindNewTarget();
+
+      SetResting();
+    }
+
+
     if(distanceFromPlayer <= 10) {
-      if(Vector3.Angle(displacementToPlayer, creature.transform.forward) < 90) {
+      if(distanceFromPlayer <= 8 && Vector3.Angle(displacementToPlayer, creature.transform.forward) < 90) {
 
         creature.speed = Vector3.zero;
 
@@ -164,7 +173,7 @@ public class AICreature {
     }
   }
 */
-  public void FindNewTargetWhileLoafing() {
+  /*public void FindNewTargetWhileLoafing() {
 
     if(creature.herd != null) {
       creature.loafPoint = creature.herd.transform.position;
@@ -179,7 +188,7 @@ public class AICreature {
     Vector3 cross = Vector3.Cross(creature.transform.forward, delta);
     if (cross.y < 0)
       rotateAngle *= -1;
-  }
+  }*/
 
   /*
 
