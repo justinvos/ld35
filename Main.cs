@@ -15,13 +15,13 @@ public class Main : MonoBehaviour {
 
 	public World world;
 
-	public List<AIHerd> herds;
+	public List<EntityHerd> herds;
 
 	void Start() {
 		inputHandler = new GameObject("inputHandler").AddComponent<InputHandler>();
 		inputHandler.main = this;
 
-		herds = new List<AIHerd>();
+		herds = new List<EntityHerd>();
 
 		entityPlayer = new GameObject("player").AddComponent<EntityPlayer>();
 		entityPlayer.transform.position = new Vector3(0, 1, 0);
@@ -33,6 +33,10 @@ public class Main : MonoBehaviour {
 		EntityShapeshifter shapeshifter = shapeshifterGameObject.AddComponent<EntityShapeshifter>();
 		shapeshifter.ai = new AIShapeshifter(this, shapeshifter, entityPlayer);
 
+
+		world.SpawnHerd(CreatureType.GABBIT, 7, 20);
+
+		world.SpawnHerd(CreatureType.BEAR, 3, 20);
 
 		world.SpawnHerd(CreatureType.GABBIT, 7, 20);
 

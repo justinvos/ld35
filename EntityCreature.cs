@@ -3,11 +3,11 @@ using UnityEngine;
 public class EntityCreature : Entity {
 
   public AICreature ai;
-  public AIHerd herd;
-
-  //DEBUG Start
+  public EntityHerd herd;
 
   public Vector3 loafPoint;
+
+  //DEBUG Start
   public Vector3 currentTarget;
   public float remainingRestTime;
   public float rotateAngle;
@@ -16,11 +16,7 @@ public class EntityCreature : Entity {
   public virtual void Start() {
     //mesh.transform.localPosition = Vector3.zero;
 
-    ai.herd = herd;
-  }
-
-  public void SetHerd(AIHerd herd) {
-    this.herd = herd;
+    loafPoint = transform.position;
   }
 
   public override void Update()
@@ -29,7 +25,7 @@ public class EntityCreature : Entity {
     ai.OnUpdate();
 
     //DEBUG Start
-    loafPoint = ai.loafPoint;
+    //loafPoint = ai.loafPoint;
     currentTarget = ai.currentTarget;
     remainingRestTime = ai.remainingRestTime;
     rotateAngle = ai.rotateAngle;

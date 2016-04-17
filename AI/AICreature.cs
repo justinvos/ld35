@@ -7,9 +7,9 @@ public class AICreature {
   private EntityCreature creature;
   protected EntityPlayer player;
 
-  public AIHerd herd;
+  //public EntityHerd herd;
 
-  public Vector3 loafPoint;
+  //public Vector3 loafPoint;
   public Vector3 currentTarget;
   public float remainingRestTime;
   public float rotateAngle;
@@ -17,19 +17,23 @@ public class AICreature {
   private float previousDistance;
 
   public AICreature(Main main, EntityCreature creature, EntityPlayer player) {
+    this.main = main;
     this.creature = creature;
     this.player = player;
 
-    loafPoint = creature.transform.position;
+
     currentTarget = creature.transform.position;
   }
 
   public virtual void OnUpdate() {
-    OnLoafUpdate();
+    MovementUpdate();
   }
 
-
   public virtual void OnLoafUpdate() {
+    MovementUpdate();
+  }
+
+  public virtual void MovementUpdate() {
 
 
     if(remainingRestTime > 0) {
@@ -55,13 +59,13 @@ public class AICreature {
     }
   }
 
-  private void FindNewTargetWhileLoafing() {
+  public void FindNewTargetWhileLoafing() {
 
-    if(herd != null) {
-      loafPoint = herd.position;
+    if(creature.herd != null) {
+      creature.loafPoint = creature.herd.transform.position;
     }
 
-    currentTarget = new Vector3(Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS, 0, Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS) + loafPoint;
+    currentTarget = new Vector3(Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS, 0, Random.Range(-1.0f, 1.0f) * LOAFING_RADIUS) + creature.loafPoint;
 
     Vector3 delta = currentTarget - creature.transform.position;
 

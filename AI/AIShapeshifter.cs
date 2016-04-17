@@ -56,36 +56,51 @@ public class AIShapeshifter : AICreature {
     }
   }
 
+  public override void OnLoafUpdate() {
+    if(shapeshifter.herd != null) {
+      shapeshifter.herd = null;
+    }
+    MovementUpdate();
+  }
+
   public void OnAwareUpdate() {
     //shapeshifter.speed = new Vector3(0, 0, 0);
-    FindNewHerdWhileAware();
+    if(shapeshifter.herd == null) {
+      FindNewHerd(45);
+    }
 
-    OnLoafUpdate();
-
+    MovementUpdate();
   }
 
   public void OnIntimidatedUpdate() {
-    shapeshifter.speed = new Vector3(0, 0, 0);
+    if(shapeshifter.herd == null) {
+      FindNewHerd(70);
+    }
+
+    MovementUpdate();
   }
 
   public void OnChaseUpdate() {
     shapeshifter.speed = new Vector3(0, 0, 0);
   }
 
-  public void FindNewHerdWhileAware() {
-    List<AIHerd> potentialHerds = new List<AIHerd>();
+  public void FindNewHerd(float angle) {
+    List<EntityHerd> potentialHerds = new List<EntityHerd>();
 
     for(int i = 0; i < main.herds.Count; i++) {
-      if(Vector3.Distance(main.herds[i].position, shapeshifter.transform.position) <= 200 && Vector3.Angle(player.transform.position - shapeshifter.transform.position, main.herds[i].position - shapeshifter.transform.position) > 45) {
+      if(Vector3.Distance(main.herds[i].transform.position, shapeshifter.transform.position) <= 200 && Vector3.Angle(player.transform.position - shapeshifter.transform.position, main.herds[i].transform.position - shapeshifter.transform.position) > angle && (shapeshifter.herd == null || shapeshifter.herd != main.herds[i])) {
         potentialHerds.Add(main.herds[i]);
       }
     }
 
-    herd = potentialHerds[(int)Mathf.Round(Random.Range(0.0F, potentialHerds.Count))];
-  }
+    potentialHerds[(int)Mathf.Round(Random.Range(0.0F, potentialHerds.Count - 1))].AddMember(shapeshifter);
 
-  public void FindNewHerdWhileIntimidated() {
+    
 
+    //loafPoint = herd.transform.position;
+    remainingRestTime = 2F;
+    shapeshifter.SetResting();
+    FindNewTargetWhileLoafing();
   }
 
   public bool IsSeen() {
