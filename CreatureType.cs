@@ -5,10 +5,14 @@ public class CreatureType {
   public static Main main;
 
   public static CreatureType GABBIT;
+  public static CreatureType LIZARD;
+  public static CreatureType BEAR;
 
   static CreatureType() {
     Main main = GameObject.Find("Main").GetComponent<Main>();
     GABBIT = new CreatureType("Gabbit", main.gabbit);
+    LIZARD = new CreatureType("Lizard", main.lizard);
+    BEAR = new CreatureType("Bear", main.bear);
   }
 
   private string label;
@@ -22,7 +26,6 @@ public class CreatureType {
   public GameObject GetPrefab() {
     return prefab;
   }
-
 
   public string GetLabel() {
     return label;
