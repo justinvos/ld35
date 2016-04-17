@@ -46,9 +46,10 @@ public class AICreature {
   public void OnLoafResting() {
 
     remainingRestTime = remainingRestTime - Time.deltaTime;
+    if (remainingRestTime < 1 && remainingRestTime > 0) {
+      creature.transform.Rotate(new Vector3(0, rotateAngle * Time.deltaTime, 0));
 
-    if(remainingRestTime <= 0) {
-      creature.transform.Rotate(new Vector3(0, rotateAngle, 0));
+    } else if (remainingRestTime <= 0) {
       remainingRestTime = 0;
       creature.speed = new Vector3(0,0,1);
     }
@@ -69,10 +70,6 @@ public class AICreature {
     Vector3 cross = Vector3.Cross(creature.transform.forward, delta);
     if (cross.y < 0)
       rotateAngle *= -1;
-  }
-
-  private void Wobble() {
-
   }
 
   public void PrintVector3(string label, Vector3 v) {
