@@ -11,6 +11,7 @@ public class AIShapeshifter : AICreature {
   private EntityShapeshifter shapeshifter;
 
   private float timeSinceLastShapeshift;
+  private float timeSinceLastSeen;
 
   private Alertness alertness;
 
@@ -58,11 +59,6 @@ public class AIShapeshifter : AICreature {
         OnChaseUpdate();
         break;
     }
-
-    if (!IsSeen() & timeSinceLastShapeshift > 15.0f) {
-      shapeshifter.shapeshift(CreatureType.CREATURE_TYPES[Random.Range(0, CreatureType.CREATURE_TYPES.Count)]);
-      timeSinceLastShapeshift = 0;
-    }
   }
 
   public override void OnLoafUpdate() {
@@ -70,6 +66,18 @@ public class AIShapeshifter : AICreature {
       shapeshifter.herd.RemoveMember(shapeshifter);
     }
     MovementUpdate();
+
+    if (!IsSeen() & timeSinceLastShapeshift > 15.0f) {
+      if (timeSinceLastSeen > 3.0f) {
+        shapeshifter.shapeshift(CreatureType.CREATURE_TYPES[Random.Range(0, CreatureType.CREATURE_TYPES.Count)]);
+        timeSinceLastShapeshift = 0;
+        Debug.Log("Shapeshifter shifted its shape");
+      } else {
+        timeSinceLastSeen += Time.deltaTime;
+      }
+    } else {
+      timeSinceLastSeen = 0;
+    }
   }
 
   public void OnAwareUpdate() {
@@ -113,7 +121,14 @@ public class AIShapeshifter : AICreature {
   }
 
   public bool IsSeen() {
-    //return shapeshifter.mesh.GetComponent<Renderer>().isVisible;
-    return false;
+    MeshRenderer mr;
+    SkinnedMeshRenderer smr;
+    if ((mr = shapeshifter.GetComponentInChildren<MeshRenderer>()) != null) {
+      return mr.isVisible;
+    } else if ((smr = shapeshifter.GetComponentInChildren<SkinnedMeshRenderer>()) != null) {
+      return smr.isVisible;
+    } else {
+      return false;
+    }
   }
 }
