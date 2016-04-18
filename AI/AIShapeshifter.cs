@@ -121,7 +121,15 @@ public class AIShapeshifter : AICreature {
   }
 
   public bool IsSeen() {
-    return shapeshifter.GetComponentInChildren<SkinnedMeshRenderer>().isVisible;
+    SkinnedMeshRenderer smr;
+    MeshRenderer mr;
+    if ((smr = shapeshifter.GetComponentInChildren<SkinnedMeshRenderer>()) != null) {
+      return smr.isVisible;
+    } else if ((mr = shapeshifter.GetComponentInChildren<MeshRenderer>()) != null) {
+      return mr.isVisible;
+    } else {
+      return true;
+    }
   }
 
   public void shapeshift(CreatureType creatureType) {

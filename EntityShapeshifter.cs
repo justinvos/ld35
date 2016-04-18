@@ -15,7 +15,9 @@ public class EntityShapeshifter : EntityCreature {
   }
 
   public void shapeshift(CreatureType creatureType) {
-    Destroy(GetComponentInChildren<SkinnedMeshRenderer>().gameObject);
+    for (int i = 0; i < transform.childCount; i++) {
+      Destroy(transform.GetChild(i).gameObject);
+    }
 
     Debug.Log(creatureType.GetLabel());
     GameObject go = main.Spawn("shapeshifterMesh", creatureType, Vector3.zero, 0);
